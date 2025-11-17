@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Card Cost Calculator — Meetings</title>
+  <title>Stripe Card Cost Calculator — 4 Meetings + November</title>
   <style>
     :root{--bg:#f7fafc;--card:#fff;--muted:#667085;--accent:#0b6cff}
     body{font-family:Inter,ui-sans-serif,system-ui; background:var(--bg); padding:28px;}
@@ -27,8 +27,8 @@
 </head>
 <body>
   <div class="card">
-    <h1>Card cost calculator — 4 meetings/year</h1>
-    <p class="small">Change Attendance and % paying by card — the rest updates automatically.</p>
+    <h1>Stripe Card Cost Calculator — 4 Meetings + November</h1>
+    <p class="small">Change Attendance and % paying by card — the table updates automatically.</p>
 
     <div class="controls">
       <div class="control">
@@ -70,7 +70,8 @@
           <th>Fee per tx</th>
           <th>Card payers (expected)</th>
           <th>Card cost per meeting</th>
-          <th>Card cost per year (4 meetings + November)</th>
+          <th>Card cost per year (4 meetings)</th>
+          <th>Card cost per year + November</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -95,7 +96,7 @@
 
   function calc(ticketPrice, attendance, pct){
     const feePerTx = ticketPrice * 0.015 + 0.20;
-    const cardPayers = attendance * (pct/100);
+    const cardPayers = attendance * (pct / 100);
     const costPerMeeting = feePerTx * cardPayers;
     const annual = costPerMeeting * 4;
     return {feePerTx, cardPayers, costPerMeeting, annual};
@@ -107,7 +108,7 @@
     const november = Number(novemberInput.value) || 0;
     pctLabel.textContent = pct + '%';
 
-    const prices = [35,40];
+    const prices = [35, 40];
     resultsTbody.innerHTML = '';
 
     prices.forEach(price => {
@@ -118,6 +119,7 @@
         <td>${formatCurrency(r.feePerTx)}</td>
         <td>${r.cardPayers.toFixed(2)}</td>
         <td>${formatCurrency(r.costPerMeeting)}</td>
+        <td>${formatCurrency(r.annual)}</td>
         <td>${formatCurrency(r.annual + november)}</td>
       `;
       resultsTbody.appendChild(tr);
@@ -133,3 +135,4 @@
 </script>
 </body>
 </html>
+
